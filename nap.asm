@@ -47,6 +47,7 @@ _start:
   ; Convert first command-line argument from string to integer (in C, this is the atoi function).
   xor eax, eax             ; Initialize a register to zero to store our result
   mov r9, [rsp+16]         ; Store address of first command-line argument in register r9
+  mov ebx, 10              ; Load a register since immediate-mode multiply doesn't write the high word to EDX
 
   ; This label marks the top of the loop
   .begin:
@@ -69,13 +70,17 @@ _start:
 
   ; Multiply the sum in EAX by 10 for the decimal place.
   ; (On the first time through the loop, EAX is 0, so this is still 0.)
-  imul eax, 10
+  imul ebx                 ; Multiply by 10
+  cmp edx, 0               ; Check for multiplication overflow
+  jne .overflow
 
   ; Add the new integer to EAX
   add eax, ecx
 
   ; If the sign bit was set, the input was too large and EAX overflowed
   js .overflow
+  ; If the carry bit was set, the input was too large and EAX overflowed
+  jc .overflow
 
   ; Increment pointer to next byte in the argv[1] string
   inc r9
