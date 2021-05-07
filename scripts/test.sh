@@ -18,17 +18,31 @@ else
 fi
 
 #
-# Test overflow input
+# Test overflow inputs
 #
-echo "TEST: Overflow returns exit status 2"
-./out/nap-x86-64 234587234857293847582834 1>/dev/null 2>/dev/null
-EXIT_CODE=$?
-if [[ "$EXIT_CODE" != "2" ]]; then
-    STATUS="FAIL"
-    echo "FAILED: Expected exit status 2. Got exit status $EXIT_CODE"
-else
-    echo "PASSED"
-fi
+for INPUT in 234587234857293847582834 4294967296 6442450943; do
+    echo "TEST: Overflow returns exit status 2"
+    # NOTE: Incorrect processing of overflow inputs could cause a very
+    # long sleep!  Set a timeout on these test cases.
+    (
+        sleep 12
+        PROCS="`ps`"
+        if echo "$PROCS" | grep nap-x86-64 >/dev/null; then
+            echo 'Timeout!'
+            killall nap-x86-64
+        fi
+    ) &
+    ./out/nap-x86-64 $INPUT 1>/dev/null 2>/dev/null
+    EXIT_CODE=$?
+    if [[ "$EXIT_CODE" != "2" ]]; then
+        STATUS="FAIL"
+        echo "FAILED: Expected exit status 2. Got exit status $EXIT_CODE"
+    else
+        echo "PASSED"
+    fi
+    kill %1 # Terminate the timeout job.
+    wait # Reap the exit status before continuing.
+done
 
 #
 # Test command-line argument
