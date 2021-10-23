@@ -2,11 +2,24 @@ name: Build & Test
 on: 
  - push 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -y  
+          sudo apt-get install -y nasm
+      - name: Build via Makefile
+        run: make
+
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
-      - name: Build via Makefile
-        run: make
+      - name: Run Tests
+        run: echo "TODO"
