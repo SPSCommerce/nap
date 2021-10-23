@@ -8,12 +8,20 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
+
       - name: Install dependencies
         run: |
           sudo apt-get update -y  
           sudo apt-get install -y nasm
+
       - name: Build via Makefile
         run: make
+
+      - name: Public artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: Build Artifact
+          path: nap
 
   test:
     runs-on: ubuntu-latest
@@ -21,5 +29,11 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -y  
+          sudo apt-get install -y nasm
+
       - name: Run Tests
         run: echo "TODO"
