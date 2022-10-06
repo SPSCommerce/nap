@@ -1,4 +1,3 @@
-FROM alpine:3.9
+FROM --platform=linux/amd64 alpine:3.16
 
-RUN apk update && \
-    apk add nasm binutils 
+RUN apk --update add nasm binutils gcc-aarch64-none-elf
