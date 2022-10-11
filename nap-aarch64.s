@@ -3,10 +3,10 @@
 # Command-line argument is optional. Defaults to 10 seconds.
 #
 # To build for aarch64 Linux:
-# as nap-arm-v8.s -o nap-arm-v8.o && ld -m aarch64elf -o nap-arm-v8 nap-arm-v8.o
+# as nap-aarch64.s -o nap-aarch64.o && ld -o nap-aarch64 nap-aarch64.o
 #
 # To build with debug info:
-# as nap-arm-v8.s --gdwarf-2 -o nap-arm-v8.o && ld -m aarch64elf -o nap-arm-v8 nap-arm-v8.o
+# as nap-aarch64.s --gdwarf-2 -o nap-aarch64.o && ld -o nap-aarch64 nap-aarch64.o
 
 .arch armv8-a
 .align 4
