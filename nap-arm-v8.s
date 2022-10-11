@@ -33,7 +33,7 @@ _start:
   bl  _print                  // display sleep message
   bl  _sleep                  // sleep
 
-  mov x0, #0                  // set error code to 0
+  mov x7, #0                  // set error code to 0
   b   _exit                   // exit
 
 _bad_input:
@@ -46,7 +46,7 @@ _bad_input:
   str x1, [x2]                // store number of seconds to sleep in timespec (via x2)
   bl  _sleep                  // sleep for the default time period
 
-  mov x0, #1                  // set error code to 1
+  mov x7, #1                  // set error code to 1
   b   _exit                   // exit
 
 # Print a message
@@ -97,11 +97,12 @@ _sleep:
 
 # Exit to system
 # Usage:
-#   (input)  x0: exit code (int)
+#   (input)  x7: exit code (int)
 _exit:
   adr x1, end_msg             // load the message text to x1
   mov x2, end_msg_len         // load the message length to x2
   bl _print                   // print the end of program message
+  mov x0, x7                  // set exit code
   mov x8, sys_exit            // setup to call sys_exit
   svc 0                       // make the service call
 
