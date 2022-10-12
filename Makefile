@@ -14,16 +14,16 @@ ci_build:
 ci_tests: ci_build
 	if [ $$(arch) = "x86_64" ]; then \
 		echo "[x86_64] Testing 1s nap"; \
-		cd out && timeout 3s $(X86_64_NAP) 1 2>&1 > /dev/null; \
+		timeout 3s $(X86_64_NAP) 1 2>&1 > /dev/null; \
 		echo "[x86_64] Testing 10s default/bad input nap"; \
-		cd out && timeout 12s $(X86_64_NAP) bad_arg ; if [ $$? = "1" ]; then true; else false; fi; \
+		timeout 12s $(X86_64_NAP) bad_arg ; if [ $$? = "1" ]; then true; else false; fi; \
 	else \
 		echo "x86_64 testing not available on aarch64 platform"; \
 	fi
 	echo "[aarch64] Testing 1s nap"
-	cd out && timeout 3s $(ARM_64_NAP) 1 2>&1 > /dev/null
+	timeout 3s $(ARM_64_NAP) 1 2>&1 > /dev/null
 	echo "[aarch64] Testing 10s default/bad input nap"
-	cd out && timeout 12s $(ARM_64_NAP) bad_arg ; if [ $$? = "1" ]; then true; else false; fi
+	timeout 12s $(ARM_64_NAP) bad_arg ; if [ $$? = "1" ]; then true; else false; fi
 
 tests: install
 	if [ $$(arch) = "x86_64" ]; then \
