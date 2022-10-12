@@ -34,6 +34,8 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install -y make nasm binutils binutils-aarch64-linux-gnu
+          sudo wget https://github.com/multiarch/qemu-user-static/releases/download/v7.1.0-2/qemu-aarch64-static -O /usr/sbin/qemu-aarch64-static
+          sudo chmod +x /usr/sbin/qemu-aarch64-static
 
       - name: Run Tests
         run: make ci_tests
