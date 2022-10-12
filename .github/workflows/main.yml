@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y nasm
+          sudo apt-get install -y make nasm binutils binutils-aarch64-linux-gnu
 
       - name: Run Tests
-        run: echo "TODO"
+        run: make ci_tests
