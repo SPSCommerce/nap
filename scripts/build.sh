@@ -13,7 +13,6 @@ ld -m elf_x86_64 \
 aarch64-linux-gnu-as nap-aarch64.s -o ./out/nap-aarch64.o
 aarch64-linux-gnu-ld \
    --strip-all \
-   -z max-page-size=0x04 \
    -o ./out/nap-aarch64 \
    ./out/nap-aarch64.o
 
