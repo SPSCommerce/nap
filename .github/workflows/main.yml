@@ -1,6 +1,6 @@
 name: Build & Test
-on: 
- - push 
+on:
+ - push
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -11,17 +11,17 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get update -y  
-          sudo apt-get install -y nasm
+          sudo apt-get update -y
+          sudo apt-get install -y make nasm binutils binutils-aarch64-linux-gnu
 
       - name: Build via Makefile
-        run: make
+        run: make ci_build
 
       - name: Public artifact
         uses: actions/upload-artifact@v1
         with:
           name: Build Artifact
-          path: nap
+          path: out/
 
   test:
     runs-on: ubuntu-latest
@@ -32,8 +32,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get update -y  
-          sudo apt-get install -y nasm
+          sudo apt-get update -y
+          sudo apt-get install -y make nasm binutils binutils-aarch64-linux-gnu
+          sudo wget https://github.com/multiarch/qemu-user-static/releases/download/v7.1.0-2/qemu-aarch64-static -O /usr/sbin/qemu-aarch64-static
+          sudo chmod +x /usr/sbin/qemu-aarch64-static
 
       - name: Run Tests
-        run: echo "TODO"
+        run: make ci_tests
