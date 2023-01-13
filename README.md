@@ -6,6 +6,8 @@ The executable can be mounted into minimal or scratch containers that have no sh
 
 It is written in assembly language to be as compact as possible. When fully assembled and linked, it weighs about 800-900 bytes depending on the linker options.
 
+Read the [full story](https://tech.spscommerce.com/2021/04/15/introducing-nap-an.html) on the SPS Tech Blog!
+
 ## But why?
 
 Our team at SPS Commerce manages Kubernetes clusters that run software for several internal teams. 
